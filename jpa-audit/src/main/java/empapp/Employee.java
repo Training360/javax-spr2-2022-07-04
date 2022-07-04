@@ -28,6 +28,7 @@ public class Employee {
     @Embedded
     private AuditInfo auditInfo = new AuditInfo();
 
+    @Embedded
     private Validity validity;
 
     @Version
