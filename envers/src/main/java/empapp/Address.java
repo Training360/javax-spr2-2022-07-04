@@ -2,12 +2,14 @@ package empapp;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
+@Audited
 public class Address {
 
     @Id
