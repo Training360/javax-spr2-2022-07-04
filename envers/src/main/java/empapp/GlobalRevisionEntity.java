@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @RevisionEntity(StubUsernameListener.class)
 @Data
-public class EmployeeRevisionEntity {
+public class GlobalRevisionEntity {
 
     @Id
     @GeneratedValue
@@ -24,4 +24,8 @@ public class EmployeeRevisionEntity {
     private Date revisionDate;
 
     private String username;
+
+    private String ip;
+
+    private String requestId;
 }
