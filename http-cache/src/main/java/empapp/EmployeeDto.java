@@ -13,6 +13,8 @@ public class EmployeeDto {
 
     private Long id;
 
+    private int version;
+
     private String name;
 
     private List<AddressDto> addresses;

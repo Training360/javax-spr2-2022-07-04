@@ -1,7 +1,9 @@
 package empapp;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -17,6 +19,8 @@ public class Address {
     private String city;
 
     @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Employee employee;
 
     public Address(String city) {

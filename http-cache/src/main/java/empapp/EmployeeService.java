@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zalando.problem.Problem;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,8 +41,11 @@ public class EmployeeService {
     }
 
     @Transactional
-    public EmployeeDto updateEmployee(long id, UpdateEmployeeCommand command) {
+    public EmployeeDto updateEmployee(long id, UpdateEmployeeCommand command, Optional<Integer> version) {
         Employee employeeToModify = employeeRepository.getById(id);
+        if (version.isPresent() && employeeToModify.getVersion() != version.get()) {
+            throw new VersionMissmatchException();
+        }
         employeeToModify.setName(command.getName());
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(employeeToModify, EmployeeDto.class);
