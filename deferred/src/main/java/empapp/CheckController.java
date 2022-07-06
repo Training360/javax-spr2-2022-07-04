@@ -2,31 +2,25 @@ package empapp;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Loader;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 @RestController
-@RequestMapping("/api/jobs")
+@RequestMapping("/api/check")
 @AllArgsConstructor
 @Slf4j
-public class CheckController
-{
-    private JobService jobService;
+public class CheckController {
 
-    @PostMapping
-    public CreateJobResponse createJob() {
-        return jobService.createJob();
+    private ClientService clientService;
+
+    @GetMapping
+    public DeferredResult<String> check() {
+        log.info("Start");
+        DeferredResult<String> result = new DeferredResult<>();
+        clientService.getStatus(result);
+        log.info("End");
+        return result;
     }
-
-    @GetMapping("{id}")
-    public JobStatus getJob(@PathVariable("id") long id) {
-        return jobService.getJob(id);
-    }
-
-    @PostMapping("/hello")
-    public void hello() {
-        log.info(jobService.getClass().getName());
-        jobService.hello();
-    }
-
 }
