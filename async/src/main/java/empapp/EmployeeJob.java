@@ -14,6 +14,8 @@ public class EmployeeJob extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        log.info("Quartz: {}", employeeService.listEmployees().size());
+        String id = jobExecutionContext.getJobDetail().getKey().getName();
+        log.info("Id: {}", id);
+        log.info("Run quartz job: {}", employeeService.listEmployees().size());
     }
 }

@@ -71,8 +71,8 @@ public class EmployeeService {
         employeeRepository.delete(employee);
     }
 
-    @Scheduled(fixedRate = 5000)
-    public void logCountOfEmployees() {
-        log.info("The number of employees: {}", employeeRepository.findAll().size());
-    }
+//    @Scheduled(fixedRate = 5000)
+//    public void logCountOfEmployees() {
+//        log.info("The number of employees: {}", employeeRepository.findAll().size());
+//    }
 }

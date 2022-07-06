@@ -12,7 +12,8 @@ public class SchedulingConfig {
     @Bean
     public JobDetail buildJobDetail() {
         JobDetail jobDetail = JobBuilder.newJob(EmployeeJob.class)
-                .withIdentity(UUID.randomUUID().toString(), "employees-job")
+                //.withIdentity(UUID.randomUUID().toString(), "employees-job")
+                .withIdentity("PrintEmployeesCountJob")
                 .withDescription("Print employees Job")
                 //.usingJobData("key1", "value1")
                 .storeDurably()
