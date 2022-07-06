@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://empapp/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="EmployeeWebServiceService" targetNamespace="http://empapp/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://empapp/" elementFormDefault="unqualified" targetNamespace="http://empapp/" version="1.0">
+
+  <xs:element name="findById" type="tns:findById"/>
+
+  <xs:element name="findByIdResponse" type="tns:findByIdResponse"/>
+
+  <xs:complexType name="findById">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findByIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:employeeDto"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="employeeDto">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="addresses" nillable="true" type="tns:addressDto"/>
+      <xs:element minOccurs="0" name="id" type="xs:long"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addressDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="city" type="xs:string"/>
+      <xs:element minOccurs="0" name="id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="findById">
+    <wsdl:part element="tns:findById" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findByIdResponse">
+    <wsdl:part element="tns:findByIdResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="EmployeeWebService">
+    <wsdl:operation name="findById">
+      <wsdl:input message="tns:findById" name="findById">
+    </wsdl:input>
+      <wsdl:output message="tns:findByIdResponse" name="findByIdResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmployeeWebServiceServiceSoapBinding" type="tns:EmployeeWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="findById">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findById">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findByIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EmployeeWebServiceService">
+    <wsdl:port binding="tns:EmployeeWebServiceServiceSoapBinding" name="EmployeeWebServicePort">
+      <soap:address location="http://localhost:8080/services/employees"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
