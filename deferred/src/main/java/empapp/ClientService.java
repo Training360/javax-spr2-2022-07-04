@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
@@ -19,8 +20,8 @@ public class ClientService {
 
     private ApplicationEventPublisher publisher;
 
-    @Async
-    public void getStatus(long id) {
+    @Async("checkTaskExecutor")
+    public void getStatus(DeferredResult<String> result) {
         log.info("Get status");
         // HTTP kérés a háttérrendszer felé
         try {
@@ -30,6 +31,8 @@ public class ClientService {
             log.error("interrupted", ie);
         }
 
+        log.info("End of sleep");
+
         // OpenFeign
         // Spring WebClient - reaktív
         // Spring Project Reactor
@@ -38,7 +41,7 @@ public class ClientService {
         WebClient.builder().clientConnector(new ReactorClientHttpConnector(client)).build()
                 .get().uri("https://training360.com")
                 .exchangeToMono(clientResponse -> Mono.just(clientResponse.statusCode().toString()))
-                .subscribe(status -> publisher.publishEvent(new CallCompletedEvent(id, status)));
+                .subscribe(status -> result.setResult(status));
 
 //        String status = "200";
 //        publisher.publishEvent(new CallCompletedEvent(id, status));

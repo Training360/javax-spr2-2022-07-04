@@ -21,7 +21,7 @@ public class JobService {
         Job job = new Job();
         jobRepository.save(job);
 
-        clientService.getStatus(job.getId());
+//        clientService.getStatus(job.getId());
 
         log.info("createJob end");
         return new CreateJobResponse(job.getId());
