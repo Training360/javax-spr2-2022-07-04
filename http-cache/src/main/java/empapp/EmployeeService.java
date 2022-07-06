@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.zalando.problem.Problem;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +43,7 @@ public class EmployeeService {
     public EmployeeDto updateEmployee(long id, UpdateEmployeeCommand command, Optional<Integer> version) {
         Employee employeeToModify = employeeRepository.getById(id);
         if (version.isPresent() && employeeToModify.getVersion() != version.get()) {
-            throw new VersionMissmatchException();
+            throw new VersionMismatchException(String.format("Not match: %d %d", version.get(), employeeToModify.getVersion()));
         }
         employeeToModify.setName(command.getName());
         ModelMapper modelMapper = new ModelMapper();
